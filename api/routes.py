@@ -5,8 +5,8 @@ Flask routes
 """
 
 from api.core import app, limiter, generate_confirmation_token, confirm_token, send_mail
-from flask import request,Response, send_file, current_app
-import api.models as models
+from flask import request,Response, send_file, current_app, g
+from api import models
 
 from flask_jwt import JWT, jwt_required, current_identity
 
@@ -30,16 +30,17 @@ import time
 from datetime import datetime, timedelta
 from zxcvbn import zxcvbn
 
-#import api.tasks as tasks
-
 import dns.resolver
 import re
+
+from flask_expects_json import expects_json
+
 
 @pony.orm.db_session
 def authenticate(email, password):
     user = models.User.get(email=email)
     if user:
-        if check_password_hash(user.password, password):
+        if check_password_hash(user.password, password.encode('utf-8')):
             user.last_authentication=int(time.time())
             return user
 
@@ -269,36 +270,79 @@ def ResetPassword():
         return 'Bad form fields in request',400
     
     password_test=zxcvbn(new_password)
-    if password_test['score']<3:
+    if password_test['score'] < 3:
         return json.dumps({'message':password_test['feedback']['warning']+' '+''.join(password_test['feedback']['suggestions'])}),422
 
     email=confirm_token(token)
     user=models.User.get(email=email)
     if user:
         enc_password=generate_password_hash(new_password).decode("utf-8") 
-        user.password=enc_password
+        user.password = enc_password
         pony.orm.commit()
         return json.dumps({'message':'Password reset'}),200 
     return 'No user found',404
  
 
 
-###########################################################
-#              Organizations Tasks
-###########################################################
+# =============================================================================
+#  Organizations
+# =============================================================================
+
+# =============================================================================
+# Admin
+# =============================================================================
 
 
-####################################################
-#                    admin
-####################################################
+# =============================================================================
+#  Contacts
+# =============================================================================
+
+@limiter.limit("2000/day")
+@app.route('/contacts',methods=['GET', 'OPTIONS'])
+@jwt_required()
+@pony.orm.db_session
+def ListContacts():
+    contacts = models.Contact.select().order_by(pony.orm.desc(models.Contact.last_name))[:3]
+    return json.dumps([c.to_dict() for c in contacts])
+
+add_contact_schema = {
+    'type': 'object',
+    'properties': {
+        'first_name': {'type': 'string'},
+        'last_name': {'type': 'string'},
+        'phone_country': {'type': 'integer'},
+        'phone_number': {'type': 'integer'},
+        'email': {'type': 'string'},
+    },
+    'required': ['email']
+}
+
+@limiter.limit("2000/day")
+@app.route('/contacts/create',methods=['POST'])
+@jwt_required()
+@pony.orm.db_session
+@expects_json(add_contact_schema)
+def CreateContact():
+    if pony.orm.exists(c for c in models.Contact if c.email == g.data['email']):
+        return json.dumps({'message': 'Contact with this email already exist'}), 409
+    
+    models.Contact(**g.data)
+    pony.orm.commit()
+    return json.dumps({'message': 'User added'}), 201
 
 
-
-
-####################################################
-#                    Test
-####################################################
+# =============================================================================
+# Test
+# =============================================================================
 
 @app.route('/test')
 def Test():
     return json.dumps({'message':'this is a test'})
+
+#@app.route('/test/populate-db')
+#@pony.orm.db_session
+#def PopulateDB():
+#    # This route should not be used in prod
+#    if app.config['DEBUG']:
+#        User[1]
+#        return json.dumps({'message':'this is a test'})

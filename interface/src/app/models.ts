@@ -2,7 +2,6 @@ export interface Deserializable<T> {
   deserialize(input: any): T;
 }
 
-
 export class User {
   id: number;
   first_name: string;
@@ -15,6 +14,14 @@ export class User {
   phone_number:string;
 }
 
+export class Contact {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_country:string;
+  phone_number:string;
+}
 
 export class Token{
   access_token:string;

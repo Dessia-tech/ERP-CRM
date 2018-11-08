@@ -1,0 +1,37 @@
+
+<div class="container">
+  <h1>Contact list</h1>
+
+  <div class="card-deck">
+    <div *ngFor="let contact of contacts" class="card">
+      <div class="card-header">{{contact.first_name}} {{contact.last_name}}</div>
+      <div class="card-body">
+        <h5 class="card-title">{{contact.email}}</h5>
+        <p class="card-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Add a contact</h2>
+  <form (ngSubmit)="createContact()">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" [(ngModel)]="contact_create.email" id="email" name="email" placeholder="Email">
+    <label for="first_name">First name</label>
+    <input type="text" class="form-control" [(ngModel)]="contact_create.first_name" id="first_name" name="first_name" placeholder="First name">
+    <label for="last_name">Last name</label>
+    <input type="text" class="form-control" [(ngModel)]="contact_create.last_name" id="last_name" name="last_name" placeholder="Last name">
+
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Organization</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>None</option>
+      <option>Company 1</option>
+      <option>Company 2</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</div>

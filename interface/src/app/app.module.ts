@@ -11,14 +11,16 @@ import { TokenInterceptor } from './token-interceptor'
 
 import { AuthService } from './services/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { LandingComponent } from './landing/landing.component'
+import { LandingComponent } from './landing/landing.component';
+import { ContactsComponent } from './contacts/contacts.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    LandingComponent
+    LandingComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
