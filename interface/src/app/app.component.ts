@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service'
-
+import { User } from './models'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,11 @@ import { AuthService } from './services/auth.service'
 })
 export class AppComponent implements OnInit{
   title = 'DessIA ERP-CRM';
-  user: User;
+  // user: User;
 
   constructor(
-    public authService: AuthService) {
+    public authService: AuthService,
+    private router: Router) {
 
 
       }
@@ -20,5 +22,10 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.authService.isTokenExpired();
    }
+
+  logout(){
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 
 }

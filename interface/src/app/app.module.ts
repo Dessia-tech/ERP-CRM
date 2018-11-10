@@ -14,7 +14,7 @@ import { ContactsService } from './services/contacts.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { ContactsComponent } from './contacts/contacts.component';
-// import { BsDropdownModule } from 'ngx-bootstrap'
+import { BsDropdownModule } from 'ngx-bootstrap'
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { ContactsComponent } from './contacts/contacts.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    // BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot()
 
   ],
   providers: [
