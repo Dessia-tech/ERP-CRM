@@ -10,9 +10,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token-interceptor'
 
 import { AuthService } from './services/auth.service';
+import { ContactsService } from './services/contacts.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
-import { ContactsComponent } from './contacts/contacts.component'
+import { ContactsComponent } from './contacts/contacts.component';
+// import { BsDropdownModule } from 'ngx-bootstrap'
 
 @NgModule({
   declarations: [
@@ -27,10 +29,13 @@ import { ContactsComponent } from './contacts/contacts.component'
     NgbModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    // BsDropdownModule.forRoot()
+
   ],
   providers: [
     AuthService,
+    ContactsService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

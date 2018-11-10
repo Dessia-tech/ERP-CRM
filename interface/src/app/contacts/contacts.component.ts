@@ -18,8 +18,8 @@ export class ContactsComponent implements OnInit {
   }
 
   createContact(){
-    console.log(this.contact_create);
     this.contactsService.createContact(this.contact_create);
+    this.getContacts();
   }
 
   getContacts(){

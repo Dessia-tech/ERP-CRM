@@ -2,15 +2,22 @@
 <div class="container">
   <h1>Contact list</h1>
 
-  <div class="card-deck">
-    <div *ngFor="let contact of contacts" class="card">
-      <div class="card-header">{{contact.first_name}} {{contact.last_name}}</div>
-      <div class="card-body">
-        <h5 class="card-title">{{contact.email}}</h5>
-        <p class="card-text"></p>
-      </div>
-    </div>
-  </div>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">email</th>
+      <th scope="col">Organization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts">
+      <td>{{contact.first_name}} {{contact.last_name}}/td>
+      <td>{{contact.email}}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
   <h2>Add a contact</h2>
   <form (ngSubmit)="createContact()">

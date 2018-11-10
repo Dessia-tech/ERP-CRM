@@ -298,11 +298,11 @@ def ResetPassword():
 # =============================================================================
 
 @limiter.limit("2000/day")
-@app.route('/contacts',methods=['GET', 'OPTIONS'])
+@app.route('/contacts',methods=['GET'])
 @jwt_required()
 @pony.orm.db_session
 def ListContacts():
-    contacts = models.Contact.select().order_by(pony.orm.desc(models.Contact.last_name))[:3]
+    contacts = models.Contact.select().order_by(pony.orm.desc(models.Contact.last_name))
     return json.dumps([c.to_dict() for c in contacts])
 
 add_contact_schema = {

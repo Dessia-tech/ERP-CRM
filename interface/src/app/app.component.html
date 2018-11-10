@@ -1,19 +1,51 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/">ERP-CRM</a>
-  <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" routerLink="/dashboard">Dashboard </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contacts">Contacts</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login">Login</a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/">ERP-CRM</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/dashboard">Dashboard </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/contacts">Contacts</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button type="button" class="btn btn-primary" *ngIf="authService.user && authService.user.last_name!=''" id="account" routerLink="/account">
+              <!-- <i mz-icon [icon]="'account_circle'" [align]="'left'"></i> -->
+              {{authService.user.first_name}} {{authService.user.last_name}}
+            </button>
+
+            <button type="button" class="btn btn-primary" *ngIf="authService.user && authService.user.last_name==''" id="account" routerLink="/account">
+              <!-- <i mz-icon [icon]="'account_circle'" [align]="'left'"></i> -->
+              {{authService.user.email}}
+            </button>
+            <div class="btn-group" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                      aria-controls="dropdown-basic">
+                Button dropdown <span class="caret"></span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                  role="menu" aria-labelledby="button-basic">
+                <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                <li class="divider dropdown-divider"></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
     </div>
 </nav>
+
+
 
 <main>
 
