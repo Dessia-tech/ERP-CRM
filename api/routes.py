@@ -298,6 +298,27 @@ def ResetPassword():
 # =============================================================================
 
 @limiter.limit("2000/day")
+@app.route('/contacts/<contact_id>',methods=['GET'])
+@jwt_required()
+@pony.orm.db_session
+def Contact(contact_id):
+    contact = models.Contact[contact_id]
+    if contact is None:
+        return 'Contact not found', 404
+    return json.dumps(contact.to_dict())
+
+@limiter.limit("2000/day")
+@app.route('/contacts/<contact_id>/delete',methods=['DELETE'])
+@jwt_required()
+@pony.orm.db_session
+def DeleteContact(contact_id):
+    contact = models.Contact[contact_id]
+    if contact is None:
+        return 'Contact not found', 404
+    contact.delete()
+    return json.dumps({'message': 'Contact deleted'}), 202
+
+@limiter.limit("2000/day")
 @app.route('/contacts',methods=['GET'])
 @jwt_required()
 @pony.orm.db_session

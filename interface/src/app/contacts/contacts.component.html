@@ -2,17 +2,19 @@
 <div class="container">
   <h1>Contact list</h1>
 
-  <table class="table">
+  <table class="table table-hover">
   <thead>
     <tr>
+      <th scope="col">id</th>
       <th scope="col">Name</th>
       <th scope="col">email</th>
       <th scope="col">Organization</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let contact of contacts">
-      <td>{{contact.first_name}} {{contact.last_name}}/td>
+    <tr *ngFor="let contact of contacts" routerLink="/contacts/{{contact.id}}">
+      <td>{{contact.id}}</td>
+      <td>{{contact.first_name}} {{contact.last_name}}</td>
       <td>{{contact.email}}</td>
       <td></td>
     </tr>
