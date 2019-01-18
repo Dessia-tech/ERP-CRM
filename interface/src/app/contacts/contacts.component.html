@@ -1,46 +1,68 @@
 
-<div class="container">
-  <h1>Contact list</h1>
 
-  <table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">Name</th>
-      <th scope="col">email</th>
-      <th scope="col">Organization</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let contact of contacts" routerLink="/contacts/{{contact.id}}">
-      <td>{{contact.id}}</td>
-      <td>{{contact.first_name}} {{contact.last_name}}</td>
-      <td>{{contact.email}}</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+<h1>Contact list</h1>
 
-  <h2>Add a contact</h2>
-  <form (ngSubmit)="createContact()">
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" [(ngModel)]="contact_create.email" id="email" name="email" placeholder="Email">
-    <label for="first_name">First name</label>
-    <input type="text" class="form-control" [(ngModel)]="contact_create.first_name" id="first_name" name="first_name" placeholder="First name">
-    <label for="last_name">Last name</label>
-    <input type="text" class="form-control" [(ngModel)]="contact_create.last_name" id="last_name" name="last_name" placeholder="Last name">
+<p-table [value]="contacts">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Organization</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-contact>
+        <tr routerLink="/contacts/{{contact.id}}">
+            <td>{{contact.name}}</td>
+            <td>{{contact.email}}</td>
+            <td>{{contact.organization}}</td>
+        </tr>
+    </ng-template>
+</p-table>
 
+
+<h2>Add a contact</h2>
+<form (ngSubmit)="createContact()">
+
+
+  <div class="p-grid ui-fluid">
+      <div class="p-col-12 p-md-6 p-lg-2">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-email"></i></span>
+          <input type="text" pInputText placeholder="Email" [(ngModel)]="contact_create.email" name="email">
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-2">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-email"></i></span>
+          <input type="text" pInputText placeholder="First name" [(ngModel)]="contact_create.first_name" name="first_name">
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-2">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-email"></i></span>
+          <input type="text" pInputText placeholder="Last name" [(ngModel)]="contact_create.last_name" name="last_name">
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-2">
+          <p-dropdown [options]="organizations_choices" [(ngModel)]="contact_create.organization" name="organization"></p-dropdown>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-2">
+          <button pButton type="submit" label="Add contact" icon="pi pi-user-plus" iconPos="left"></button>
+      </div>
   </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Organization</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>None</option>
-      <option>Company 1</option>
-      <option>Company 2</option>
-    </select>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+
+
+
+
+
+<!-- <div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" class="form-control"  id="email" name="email" placeholder="Email">
+  <label for="first_name">First name</label>
+  <input type="text" class="form-control" [(ngModel)]="contact_create.first_name" id="first_name" name="first_name" placeholder="First name">
+  <label for="last_name">Last name</label>
+  <input type="text" class="form-control" [(ngModel)]="contact_create.last_name" id="last_name" name="last_name" placeholder="Last name">
+
+</div> -->
 </form>
-
-</div>

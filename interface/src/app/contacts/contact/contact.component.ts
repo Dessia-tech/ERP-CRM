@@ -2,8 +2,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Contact } from '../../models'
 import { ContactsService } from '../../services/contacts.service'
 import { Router, ActivatedRoute } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service'
 
 @Component({
   selector: 'app-contact',
@@ -13,13 +11,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service'
 export class ContactComponent implements OnInit {
   contact: Contact = new Contact;
   contact_id: number;
-  confirm_delete_modal: BsModalRef;
 
   constructor(
     private contactsService: ContactsService,
     private route: ActivatedRoute,
-    private router: Router,
-    private modalService: BsModalService) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.contact_id = +this.route.snapshot.paramMap.get('contact_id');
@@ -33,17 +29,17 @@ export class ContactComponent implements OnInit {
       })
   }
 
-  openDeleteModal(template: TemplateRef<any>) {
-    this.confirm_delete_modal = this.modalService.show(template, { class: 'modal-sm' });
-  }
-
-  closeDeleteModal() {
-    this.confirm_delete_modal.hide();
-    this.confirm_delete_modal = null;
-  }
+  // openDeleteModal(template: TemplateRef<any>) {
+  //   this.confirm_delete_modal = this.modalService.show(template, { class: 'modal-sm' });
+  // }
+  //
+  // closeDeleteModal() {
+  //   this.confirm_delete_modal.hide();
+  //   this.confirm_delete_modal = null;
+  // }
 
   deleteContact(){
-    this.closeDeleteModal();
+    // this.closeDeleteModal();
     this.contactsService.deleteContact(this.contact_id)
       .subscribe(message=>{
         this.router.navigate(['/contacts']);

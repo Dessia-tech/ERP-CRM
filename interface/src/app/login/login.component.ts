@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../models';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
      private auth: AuthService,
      private route: ActivatedRoute,
-     private router: Router
+     private router: Router,
+     private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -27,15 +29,13 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    //    this.notificationsService.modal('Successfully logged in!');
     this.auth.login(this.email, this.password)
     .then((user) => {
-      console.log('logged',user);
-      // this.notificationsService.notification('Successfully logged in!');
       this.router.navigateByUrl(this.returnUrl);
+      this.messageService.add({severity:'info', summary:'Successfully logged in'});
     })
     .catch((err) => {
-      // this.notificationsService.notificationError('Login Error');
+      this.messageService.add({severity:'error', summary:'Login Error', detail:err.statusText});
     });
   }
 

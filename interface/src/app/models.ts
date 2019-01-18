@@ -21,6 +21,13 @@ export class Contact {
   email: string;
   phone_country:string;
   phone_number:string;
+  organization: number;
+}
+
+export class Organization {
+  id: number;
+  name: string;
+  country: string;
 }
 
 export class Token{

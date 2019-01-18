@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -14,9 +14,21 @@ import { ContactsService } from './services/contacts.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { ContactsComponent } from './contacts/contacts.component';
-import { BsDropdownModule } from 'ngx-bootstrap';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { ContactComponent } from './contacts/contact/contact.component'
+import { ContactComponent } from './contacts/contact/contact.component';
+// import { CreateContactComponent } from './contacts/create-contact/create-contact.component';
+
+
+// PrimeNG Modules
+import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/components/inputtext/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+
+// PrimeNg Services
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -25,21 +37,30 @@ import { ContactComponent } from './contacts/contact/contact.component'
     DashboardComponent,
     LandingComponent,
     ContactsComponent,
-    ContactComponent
+    ContactComponent,
+    // CreateContactComponent,
+
+
   ],
   imports: [
     BrowserModule,
-    NgbModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BsDropdownModule.forRoot(),
-    ModalModule.forRoot()
+    MenubarModule,
+    ButtonModule,
+    InputTextModule,
+    PasswordModule,
+    ToastModule,
+    TableModule,
+    DropdownModule
 
   ],
   providers: [
     AuthService,
     ContactsService,
+    MessageService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
