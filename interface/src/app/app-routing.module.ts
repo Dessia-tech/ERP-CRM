@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContactsComponent } from './contacts/contacts.component';
 // import { CreateContactComponent } from './contacts/create-contact/create-contact.component';
 import { ContactComponent } from './contacts/contact/contact.component';
+import { AccountComponent } from './account/account.component';
 
 import { AuthGuard } from './auth.guard'
 
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: '', component: LandingComponent},
     { path: 'login', component: LoginComponent},
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+    { path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
     { path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard]},
     // { path: 'contacts/create', component: CreateContactComponent, canActivate: [AuthGuard]},
     { path: 'contacts/:contact_id', component: ContactComponent, canActivate: [AuthGuard]},

@@ -3,3 +3,8 @@
 nav{
   padding-bottom: 20px;
 }
+
+.center{
+  display:block;
+  text-align:center;
+}

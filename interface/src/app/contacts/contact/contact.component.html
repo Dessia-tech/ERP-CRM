@@ -1,5 +1,44 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-9">
+
+      <h1>Contact details</h1>
+
+      <p-card>
+          <p-header>
+              {{contact.first_name}} {{contact.last_name}}
+          </p-header>
+          {{contact.phone_country}} {{contact.phone_number}}
+          <p-footer>
+              {{contact.email}}
+          </p-footer>
+      </p-card>
+    </div>
+
+  <div class="p-col-12 p-md-3">
+    <p-accordion>
+        <p-accordionTab header="Delete Contact">
+          <button pButton type="button" class="ui-button-danger" label="Delete contact" (click)="openDeleteConfirm()" ></button>
+        </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>
+
+
+<p-dialog header="Delete contact?" [(visible)]="display_delete_contact">
+  <p-header>
+    Confirm deletion of contact?
+  </p-header>
+  This can't be undone
+  <p-footer>
+      <button pButton type="button" label="Abort" (click)="this.display_delete_contact=false" ></button>
+      <button pButton type="button" class="ui-button-danger" label="Confirm Deletion" (click)="deleteContact()" ></button>
+  </p-footer>
+</p-dialog>
+
+<!-- <button type="button" (click)="showDialog()" pButton icon="pi pi-info-circle" label="Show"></button> -->
+
 <!-- <div class="container">
-  <h1>Contact details</h1>
+
 
   <div class="card">
     <div class="card-header">

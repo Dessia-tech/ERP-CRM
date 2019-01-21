@@ -1,57 +1,60 @@
 
+<div class="p-grid">
+  <div class="p-col-12 p-lg-6">
+    <h1>Contact list</h1>
 
-<h1>Contact list</h1>
-
-<p-table [value]="contacts">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Organization</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-contact>
-        <tr routerLink="/contacts/{{contact.id}}">
-            <td>{{contact.name}}</td>
-            <td>{{contact.email}}</td>
-            <td>{{contact.organization}}</td>
-        </tr>
-    </ng-template>
-</p-table>
-
-
-<h2>Add a contact</h2>
-<form (ngSubmit)="createContact()">
-
-
-  <div class="p-grid ui-fluid">
-      <div class="p-col-12 p-md-6 p-lg-2">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-email"></i></span>
-          <input type="text" pInputText placeholder="Email" [(ngModel)]="contact_create.email" name="email">
+    <p-table [value]="contacts">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Organization</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-contact>
+            <tr routerLink="/contacts/{{contact.id}}">
+                <td>{{contact.first_name}} {{contact.last_name}}</td>
+                <td>{{contact.email}}</td>
+                <td>{{contact.organization}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="p-col-12 p-lg-6">
+  <h2>Add a contact</h2>
+  <form (ngSubmit)="createContact()">
+    <div class="p-grid ui-fluid">
+        <div class="p-col-12 p-md-6 p-lg-3">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><fa name="at"></fa></span>
+            <input type="text" pInputText placeholder="Email" [(ngModel)]="contact_create.email" name="email">
+          </div>
         </div>
-      </div>
-      <div class="p-col-12 p-md-6 p-lg-2">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-email"></i></span>
-          <input type="text" pInputText placeholder="First name" [(ngModel)]="contact_create.first_name" name="first_name">
+        <div class="p-col-12 p-md-6 p-lg-3">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><fa name="user"></fa></span>
+            <input type="text" pInputText placeholder="First name" [(ngModel)]="contact_create.first_name" name="first_name">
+          </div>
         </div>
-      </div>
-      <div class="p-col-12 p-md-6 p-lg-2">
-        <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-email"></i></span>
-          <input type="text" pInputText placeholder="Last name" [(ngModel)]="contact_create.last_name" name="last_name">
+        <div class="p-col-12 p-md-6 p-lg-3">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><fa name="user"></fa></span>
+            <input type="text" pInputText placeholder="Last name" [(ngModel)]="contact_create.last_name" name="last_name">
+          </div>
         </div>
-      </div>
-      <div class="p-col-12 p-md-6 p-lg-2">
-          <p-dropdown [options]="organizations_choices" [(ngModel)]="contact_create.organization" name="organization"></p-dropdown>
-      </div>
-      <div class="p-col-12 p-md-6 p-lg-2">
+        <div class="p-col-12 p-md-6 p-lg-3">
+            <p-dropdown [options]="organizations_choices" [(ngModel)]="contact_create.organization" name="organization"></p-dropdown>
+        </div>
+    </div>
+    <div class="p-grid ui-fluid p-justify-center">
+      <div class="p-col-12 p-md-6 p-lg-3 ">
           <button pButton type="submit" label="Add contact" icon="pi pi-user-plus" iconPos="left"></button>
       </div>
-  </div>
+    </div>
 
-
+  </form>
+</div>
+</div>
 
 
 
@@ -65,4 +68,3 @@
   <input type="text" class="form-control" [(ngModel)]="contact_create.last_name" id="last_name" name="last_name" placeholder="Last name">
 
 </div> -->
-</form>

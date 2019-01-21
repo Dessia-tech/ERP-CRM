@@ -13,6 +13,7 @@ import {MenuItem} from 'primeng/api';
 export class AppComponent implements OnInit{
   title = 'DessIA ERP-CRM';
   items: MenuItem[];
+  display_sidebar: boolean;
   // user: User;
 
   constructor(
@@ -26,6 +27,12 @@ export class AppComponent implements OnInit{
     this.authService.isTokenExpired();
 
     this.items = [
+                {
+                    label: 'Menu',
+                    icon: 'pi pi-bars',
+                    command: (event) => {
+                     this.display_sidebar = true;}
+                },
                 {
                     label: 'Dashboard',
                     icon: 'pi pi-th-large',
@@ -49,5 +56,7 @@ export class AppComponent implements OnInit{
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
+
 
 }

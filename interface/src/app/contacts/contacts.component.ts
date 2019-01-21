@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContactsService } from '../services/contacts.service'
 import { Contact, Organization } from '../models'
 import { SelectItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-contacts',
@@ -14,7 +15,8 @@ export class ContactsComponent implements OnInit {
   organization: SelectItem[];
   organizations_choices: any[];
 
-  constructor(private contactsService: ContactsService) { }
+  constructor(private contactsService: ContactsService,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.getContacts();
@@ -23,9 +25,15 @@ export class ContactsComponent implements OnInit {
   }
 
   createContact(){
-    this.contactsService.createContact(this.contact_create);
-    this.getContacts();
-  }
+    this.contactsService.createContact(this.contact_create).then((user) => {
+      this.getContacts();
+      this.messageService.add({severity:'info', summary:'User Created!'});
+        })
+        .catch((err) => {
+          this.messageService.add({severity:'error', summary:'Error in user creation', detail:err.statusText});
+        });
+      }
+
 
   getContacts(){
     this.contactsService.getContacts().subscribe(

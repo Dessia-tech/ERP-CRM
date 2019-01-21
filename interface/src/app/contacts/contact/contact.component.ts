@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ContactComponent implements OnInit {
   contact: Contact = new Contact;
   contact_id: number;
+  display_delete_contact: boolean;
 
   constructor(
     private contactsService: ContactsService,
@@ -20,6 +21,7 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
     this.contact_id = +this.route.snapshot.paramMap.get('contact_id');
     this.getContact(this.contact_id);
+    display_delete_contact = false;
   }
 
   getContact(contact_id){
@@ -29,9 +31,10 @@ export class ContactComponent implements OnInit {
       })
   }
 
-  // openDeleteModal(template: TemplateRef<any>) {
-  //   this.confirm_delete_modal = this.modalService.show(template, { class: 'modal-sm' });
-  // }
+  openDeleteConfirm() {
+    this.display_delete_contact = true;
+
+  }
   //
   // closeDeleteModal() {
   //   this.confirm_delete_modal.hide();

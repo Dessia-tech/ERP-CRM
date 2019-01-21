@@ -41,14 +41,28 @@
 <nav>
   <p-menubar [model]="items">
           <!-- <input type="text" pInputText placeholder="Search"> -->
-          <button *ngIf="authService.user" pButton type="button" routerLink="/account" class="ui-button-secondary" [label]="authService.user.email"></button>
+          <button *ngIf="authService.user" pButton type="button" routerLink='/account' class="ui-button-secondary" [label]="authService.user.email"></button>
           <button *ngIf="authService.user" pButton (click)="logout()" label="Logout" icon="pi pi-sign-out" style="margin-left:.25em"></button>
           <button *ngIf="!authService.user" pButton routerLink="/login" label="Login" icon="pi pi-sign-in" style="margin-left:.25em"></button>
   </p-menubar>
+<p-sidebar [(visible)]="display_sidebar" styleClass="ui-sidebar-sm" position="left">
+  <div class="p-grid p-justify-center">
+    <div *ngIf="authService.user" class="p-col-12">
+      <div class="center">
+      <img  ngxGravatar [email]="'authService.user.email'" size="65">
+      <p *ngIf="authService.user.first_name!=''||authService.user.last_name!=''">{{authService.user.first_name}} {{authService.user.last_name}}</p>
+      <p *ngIf="authService.user.first_name==''&&authService.user.last_name==''">{{authService.user.email}}</p>
+    </div>
+    </div>
+  </div>
+
+</p-sidebar>
 </nav>
 
+
+
 <main>
-<p-toast> </p-toast>
+<p-toast position="bottom-right"> </p-toast >
 <router-outlet></router-outlet>
 
 </main>

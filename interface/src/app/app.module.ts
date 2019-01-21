@@ -18,6 +18,9 @@ import { ContactComponent } from './contacts/contact/contact.component';
 // import { CreateContactComponent } from './contacts/create-contact/create-contact.component';
 
 
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { GravatarModule } from  'ngx-gravatar';
+
 // PrimeNG Modules
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -26,9 +29,14 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
+import { AccordionModule } from 'primeng/accordion';
+import { DialogModule } from 'primeng/dialog';
+import { SidebarModule } from 'primeng/sidebar';
 
 // PrimeNg Services
 import { MessageService } from 'primeng/api';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +46,7 @@ import { MessageService } from 'primeng/api';
     LandingComponent,
     ContactsComponent,
     ContactComponent,
+    AccountComponent,
     // CreateContactComponent,
 
 
@@ -47,6 +56,7 @@ import { MessageService } from 'primeng/api';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    AngularFontAwesomeModule,
     HttpClientModule,
     MenubarModule,
     ButtonModule,
@@ -54,7 +64,12 @@ import { MessageService } from 'primeng/api';
     PasswordModule,
     ToastModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    CardModule,
+    AccordionModule,
+    DialogModule,
+    SidebarModule,
+    GravatarModule
 
   ],
   providers: [
