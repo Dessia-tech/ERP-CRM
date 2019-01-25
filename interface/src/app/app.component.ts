@@ -39,15 +39,24 @@ export class AppComponent implements OnInit{
                     // items: []
                 },
                 {
-                    label: 'Contacts',
-                    icon: 'pi pi-fw pi-users',
+                    label: 'Database',
+                    icon: 'fa fa-fw fa-database',
                     items: [
-                        {label: 'List', icon: 'pi pi-list', routerLink: '/contacts'},
-                        {label: 'Add', icon: 'pi pi-fw pi-plus',
-                         routerLink: '/contacts/create'}
+                        {label: 'Contacts', icon: 'pi pi-users', routerLink: '/contacts'},
+                        {label: 'Organizations', icon: 'fa fa-fw fa-building',
+                         routerLink: '/organizations'}
                     ],
                     routerLink: '/contacts'
-                }
+                },
+                {
+                    label: 'Meetings',
+                    icon: 'fa fa-fw fa-briefcase',
+                    items: [
+                        {label: 'List', icon: 'pi pi-list', routerLink: '/meetings'},
+                        {label: 'Create', icon: 'fa fa-fw fa-plus',
+                         routerLink: '/meetings/create'}
+                    ],
+                },
             ];
 
    }

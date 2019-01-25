@@ -1,0 +1,31 @@
+<form (ngSubmit)="createOrganization()">
+  <div class="p-grid ui-fluid">
+      <div class="p-col-12">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><fa name="building"></fa></span>
+          <input type="text" pInputText placeholder="Organization name" [(ngModel)]="organization_create.name" name="name">
+        </div>
+      </div>
+      <!-- <div class="p-col-12 p-md-6">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><fa name="user"></fa></span>
+          <input type="text" pInputText placeholder="First name" [(ngModel)]="organization_create.first_name" name="first_name">
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><fa name="user"></fa></span>
+          <input type="text" pInputText placeholder="Last name" [(ngModel)]="organization_create.last_name" name="last_name">
+        </div>
+      </div>
+      <div class="p-col-12 p-md-6">
+          <p-dropdown [options]="organizations_choices" [(ngModel)]="organization_create.organization" name="organization"></p-dropdown>
+      </div> -->
+  </div>
+  <div class="p-grid ui-fluid p-justify-center">
+    <div class="p-col-12 p-md-6 p-lg-6 ">
+        <button pButton type="submit" label="Add organization" icon="pi pi-user-plus" iconPos="left"></button>
+    </div>
+  </div>
+
+</form>

@@ -324,33 +324,168 @@ def DeleteContact(contact_id):
 @pony.orm.db_session
 def ListContacts():
     contacts = models.Contact.select().order_by(pony.orm.desc(models.Contact.last_name))
-    return json.dumps([c.to_dict() for c in contacts])
-
-add_contact_schema = {
-    'type': 'object',
-    'properties': {
-        'first_name': {'type': 'string'},
-        'last_name': {'type': 'string'},
-        'phone_country': {'type': 'integer'},
-        'phone_number': {'type': 'integer'},
-        'email': {'type': 'string'},
-    },
-    'required': ['email']
-}
+    return json.dumps([c.Dict() for c in contacts])
 
 @limiter.limit("2000/day")
 @app.route('/contacts/create',methods=['POST'])
 @jwt_required()
 @pony.orm.db_session
-@expects_json(add_contact_schema)
+@expects_json(models.Contact.json_schema)
 def CreateContact():
     if pony.orm.exists(c for c in models.Contact if c.email == g.data['email']):
         return json.dumps({'message': 'Contact with this email already exist'}), 409
     
-    models.Contact(**g.data)
+    contact = models.Contact(**g.data)
+    if 'organization' in g.data:
+        if g.data['organization'] is not None:
+            organization = models.Organization[g.data['organization']]
+            if organization is None:
+                return json.dumps({'message': 'Organization not found'}), 404
+            organization.AddContact(contact)
     pony.orm.commit()
     return json.dumps({'message': 'User added'}), 201
 
+
+# =============================================================================
+#  Organizations
+# =============================================================================
+
+@limiter.limit("2000/day")
+@app.route('/organizations/<organization_id>',methods=['GET'])
+@jwt_required()
+@pony.orm.db_session
+def Organization(organization_id):
+    organization = models.Organization[organization_id]
+    if organization is None:
+        return 'Organization not found', 404
+    return json.dumps(organization.Dict())
+
+@limiter.limit("2000/day")
+@app.route('/organizations',methods=['GET'])
+@jwt_required()
+@pony.orm.db_session
+def ListOrganizations():
+    organizations = models.Organization.select().order_by(models.Organization.name)
+    return json.dumps([o.to_dict() for o in organizations])
+
+
+@limiter.limit("2000/day")
+@app.route('/organizations/create',methods=['POST'])
+@jwt_required()
+@pony.orm.db_session
+@expects_json(models.Organization.json_schema)
+def CreateOrganization():
+    if pony.orm.exists(o for o in models.Organization if o.name == g.data['name']):
+        return json.dumps({'message': 'An organization with this already exist'}), 409
+    
+    models.Organization(**g.data)
+    pony.orm.commit()
+    return json.dumps({'message': 'Organization created'}), 201
+
+
+add_contact_organization_schema = {
+        'type': 'object',
+        'properties': {
+            'contact_id': {'type': 'integer'},
+        },
+        'required': ['contact_id']
+        }
+
+@limiter.limit("2000/day")
+@app.route('/organizations/<organization_id>/contacts/add',methods=['POST'])
+@jwt_required()
+@pony.orm.db_session
+@expects_json(add_contact_organization_schema)
+def AddContactToOrganization(organization_id):
+    contact = models.Contact[g.data['contact_id']]
+    if contact is None:
+        return json.dumps({'message': 'Contact not found'}), 404
+    
+    organization = models.Organization[organization_id]
+    if organization is None:
+        return json.dumps({'message': 'Organization not found'}), 404
+
+    organization.AddContact(contact)    
+    return json.dumps({'message': 'Contact added to organization'}), 202
+
+@limiter.limit("2000/day")
+@app.route('/organizations/<organization_id>/delete',methods=['DELETE'])
+@jwt_required()
+@pony.orm.db_session
+def DeleteOrganization(organization_id):
+    organization = models.Organization[organization_id]
+    if organization is None:
+        return 'Organization not found', 404
+    organization.delete()
+    return json.dumps({'message': 'Organization deleted'}), 202
+
+
+# =============================================================================
+#  Meetings
+# =============================================================================
+
+@limiter.limit("2000/day")
+@app.route('/meetings/<meeting_id>',methods=['GET'])
+@jwt_required()
+@pony.orm.db_session
+def Meeting(meeting_id):
+    meeting = models.Meeting[meeting_id]
+    if meeting is None:
+        return 'Meeting not found', 404
+    return json.dumps(meeting.Dict())
+
+@limiter.limit("2000/day")
+@app.route('/meetings',methods=['GET'])
+@jwt_required()
+@pony.orm.db_session
+def ListMeetings():
+    meetings = models.Meeting.select().order_by(models.Meeting.start_date)
+    return json.dumps([m.Dict() for m in meetings])
+
+@limiter.limit("2000/day")
+@app.route('/meetings/create',methods=['POST'])
+@jwt_required()
+@pony.orm.db_session
+@expects_json(models.Meeting.json_schema)
+def CreateMeeting():
+#    if pony.orm.exists(o for o in models.Organization if o.name == g.data['name']):
+#        return json.dumps({'message': 'An organization with this already exist'}), 409
+    payload = g.data
+    contacts = []
+    for contact_id in payload['contact_participants']:
+        contact = models.Contact[contact_id]
+        if contact is None:
+            return json.dumps({'message': 'Contact attached to meeting not found'}), 404
+        contacts.append(contact)
+    payload['contact_participants'] = contacts
+    models.Meeting(**payload)
+    pony.orm.commit()
+    return json.dumps({'message': 'Meeting created'}), 201
+
+
+@limiter.limit("2000/day")
+@app.route('/meetings/<meeting_id>/edit',methods=['POST'])
+@jwt_required()
+@pony.orm.db_session
+@expects_json(models.Meeting.json_schema)
+def EditMeeting(meeting_id):
+#    if pony.orm.exists(o for o in models.Organization if o.name == g.data['name']):
+#        return json.dumps({'message': 'An organization with this already exist'}), 409
+    payload = g.data
+    meeting = models.Meeting[meeting_id]
+    if meeting is None:
+        return json.dumps({'message': 'Meeting not found'}), 404
+#    contacts = []
+#    for contact_id in payload['contact_participants']:
+#        contact = models.Contact[contact_id]
+#        if contact is None:
+#            return json.dumps({'message': 'Contact attached to meeting not found'}), 404
+#        contacts.append(contact)
+#    payload['contact_participants'] = contacts
+    updated = meeting.Update(payload)
+    if not updated:
+        return json.dumps({'message': 'Update error'}), 400
+    return json.dumps({'message': 'Meeting updated'}), 200
 
 # =============================================================================
 # Test

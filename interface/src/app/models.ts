@@ -33,3 +33,11 @@ export class Organization {
 export class Token{
   access_token:string;
 }
+
+export class Meeting{
+  contact_participants: any[];
+  start_date: number;
+  end_date: number;
+  name: string;
+  report: string;
+}

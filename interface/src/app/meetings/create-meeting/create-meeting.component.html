@@ -1,0 +1,34 @@
+<form (ngSubmit)="createMeeting()">
+  <div class="p-grid p-justify-center" *ngIf="meeting">
+    <div class="p-col-6">
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="Meeting infos" [selected]="true">
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">Name</span>
+            <input type="text" pInputText placeholder="Meeting name" [(ngModel)]="meeting.name" name="name">
+          </div>
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">Start date</span>
+            <p-calendar [(ngModel)]="start_date" showTime="true" hourFormat="24" name="start_date"></p-calendar>
+          </div>
+          <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">End date</span>
+            <p-calendar [(ngModel)]="end_date" showTime="true" hourFormat="24" name="end_date"></p-calendar>
+          </div>
+        </p-accordionTab>
+        <p-accordionTab header="Add contacts in this meeting" class="ui-fluid" [selected]="true">
+          <p-listbox [options]="contacts"  optionLabel="full_name" dataKey="id" name="contacts" [(ngModel)]="selected_contacts" multiple="multiple" checkbox="checkbox" filter="filter">
+            <p-header>
+              <i class="fa fa-user"></i>
+              Contacts
+            </p-header>
+          </p-listbox>
+          <!-- <button pButton type="button" class="ui-button" label="Add contacts" (click)="addContactsToOrganization()" ></button> -->
+        </p-accordionTab>
+      </p-accordion>
+
+      <button pButton type="submit" class="ui-button" label="Create meeting" ></button>
+
+    </div>
+  </div>
+</form>

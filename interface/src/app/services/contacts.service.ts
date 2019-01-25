@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Contact } from '../models'
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +11,7 @@ export class ContactsService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(
-    private http: HttpClient,
-    private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   getContact(contact_id): Observable<Contact>{
     return this.http.get<Contact>(environment.api_url+'/contacts/'+String(contact_id));

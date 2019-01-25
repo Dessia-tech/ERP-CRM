@@ -9,14 +9,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token-interceptor'
 
+// Services
 import { AuthService } from './services/auth.service';
 import { ContactsService } from './services/contacts.service';
+import { OrganizationsService } from './services/organizations.service';
+
+// Components
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandingComponent } from './landing/landing.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ContactComponent } from './contacts/contact/contact.component';
-// import { CreateContactComponent } from './contacts/create-contact/create-contact.component';
-
+import { AccountComponent } from './account/account.component';
+import { OrganizationsComponent } from './organizations/organizations.component';
+import { CreateOrganizationComponent } from './organizations/create-organization/create-organization.component';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { GravatarModule } from  'ngx-gravatar';
@@ -33,10 +38,16 @@ import { CardModule } from 'primeng/card';
 import { AccordionModule } from 'primeng/accordion';
 import { DialogModule } from 'primeng/dialog';
 import { SidebarModule } from 'primeng/sidebar';
+import { ListboxModule } from 'primeng/listbox';
+import { EditorModule } from 'primeng/editor';
+import { CalendarModule } from 'primeng/calendar';
 
 // PrimeNg Services
 import { MessageService } from 'primeng/api';
-import { AccountComponent } from './account/account.component';
+import { OrganizationComponent } from './organizations/organization/organization.component';
+import { MeetingsComponent } from './meetings/meetings.component';
+import { MeetingComponent } from './meetings/meeting/meeting.component';
+import { CreateMeetingComponent } from './meetings/create-meeting/create-meeting.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +58,12 @@ import { AccountComponent } from './account/account.component';
     ContactsComponent,
     ContactComponent,
     AccountComponent,
-    // CreateContactComponent,
-
+    OrganizationsComponent,
+    CreateOrganizationComponent,
+    OrganizationComponent,
+    MeetingsComponent,
+    MeetingComponent,
+    CreateMeetingComponent,
 
   ],
   imports: [
@@ -69,12 +84,16 @@ import { AccountComponent } from './account/account.component';
     AccordionModule,
     DialogModule,
     SidebarModule,
-    GravatarModule
+    GravatarModule,
+    ListboxModule,
+    EditorModule,
+    CalendarModule
 
   ],
   providers: [
     AuthService,
     ContactsService,
+    OrganizationsService,
     MessageService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],

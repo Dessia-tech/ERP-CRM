@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-  contact: Contact = new Contact;
+  contact: Contact;
   contact_id: number;
   display_delete_contact: boolean;
 
@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
     this.contact_id = +this.route.snapshot.paramMap.get('contact_id');
     this.getContact(this.contact_id);
-    display_delete_contact = false;
+    this.display_delete_contact = false;
   }
 
   getContact(contact_id){
@@ -35,11 +35,6 @@ export class ContactComponent implements OnInit {
     this.display_delete_contact = true;
 
   }
-  //
-  // closeDeleteModal() {
-  //   this.confirm_delete_modal.hide();
-  //   this.confirm_delete_modal = null;
-  // }
 
   deleteContact(){
     // this.closeDeleteModal();

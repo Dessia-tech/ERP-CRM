@@ -1,0 +1,53 @@
+<h1>Organization details</h1>
+<div class="p-grid">
+    <div class="p-col-12 p-md-9">
+      <p-card>
+          <p-header>
+              {{organization.name}}
+          </p-header>
+          <p-footer>
+          </p-footer>
+      </p-card>
+
+      <h2>Contacts in this organization</h2>
+      <div class="p-grid">
+        <div class="p-col-4" *ngFor='let contact of organization.contacts'>
+          <p-card routerLink='/contacts/{{contact.id}}'>
+            <p-header>
+                <img *ngIf='contact'  ngxGravatar [email]='contact.email' size="65">{{contact.first_name}} {{contact.last_name}}
+            </p-header>
+            {{contact.email}}
+          </p-card>
+        </div>
+      </div>
+    </div>
+
+  <div class="p-col-12 p-md-3">
+    <p-accordion>
+      <p-accordionTab header="Add contacts in this organization" class="ui-fluid">
+        <p-listbox [options]="single_contacts" [(ngModel)]="selected_contacts" multiple="multiple" checkbox="checkbox" filter="filter">
+          <p-header>
+            <i class="fa fa-user"></i>
+            Contacts without organization
+          </p-header>
+        </p-listbox>
+        <button pButton type="button" class="ui-button" label="Add contacts" (click)="addContactsToOrganization()" ></button>
+      </p-accordionTab>
+        <p-accordionTab header="Delete Organization">
+          <button pButton type="button" class="ui-button-danger" label="Delete organization" (click)="openDeleteConfirm()" ></button>
+        </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>
+
+
+<p-dialog header="Delete organization?" [(visible)]="display_delete_organization">
+  <p-header>
+    Confirm deletion of organization?
+  </p-header>
+  This can't be undone
+  <p-footer>
+      <button pButton type="button" label="Abort" (click)="this.display_delete_organization=false" ></button>
+      <button pButton type="button" class="ui-button-danger" label="Confirm Deletion" (click)="deleteOrganization()" ></button>
+  </p-footer>
+</p-dialog>

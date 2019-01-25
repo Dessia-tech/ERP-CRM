@@ -1,0 +1,50 @@
+<form (ngSubmit)="editMeeting()">
+  <div class="p-grid" *ngIf='meeting'>
+    <div class="p-col-3">
+      <button *ngIf='edit_mode' pButton type="submit" class="ui-button" label="Save changes" ></button>
+      <button *ngIf='edit_mode' pButton type="button" class="ui-button-warning" label="Dismiss" (click)="changeEditMode()"></button>
+      <button *ngIf='!edit_mode' pButton type="button" class="ui-button" label="Edit Mode" (click)="changeEditMode()"></button>
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="Meeting infos" [selected]="true">
+          <div *ngIf='edit_mode'>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon">Start date</span>
+              <input type="text" pInputText placeholder="Meeting name" [(ngModel)]="meeting.name" name="name">
+            </div>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon">Start date</span>
+              <p-calendar [(ngModel)]="start_date" showTime="true" hourFormat="24" name="start_date"></p-calendar>
+            </div>
+            <div class="ui-inputgroup">
+              <span class="ui-inputgroup-addon">End date</span>
+              <p-calendar [(ngModel)]="end_date" showTime="true" hourFormat="24" name="end_date"></p-calendar>
+            </div>
+          </div>
+          <div *ngIf='!edit_mode'>
+            <p>Meeting name: {{meeting.name}}</p>
+            <p>Start date: {{meeting.start_date}}</p>
+            <p>End date: {{meeting.end_date}}</p>
+          </div>
+
+        </p-accordionTab>
+        <p-accordionTab header="Contacts in this meeting" class="ui-fluid" [selected]="true">
+          <p-listbox [options]="all_contacts" [readonly]="!edit_mode" optionLabel="full_name" [checkbox]="edit_mode"
+                      dataKey="id" name="contacts" [(ngModel)]="selected_contacts" multiple="multiple"  filter="filter">
+            <p-header>
+              <i class="fa fa-user"></i>
+              Contacts
+            </p-header>
+          </p-listbox>
+
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+    <div class="p-col-9">
+      <p-editor *ngIf='edit_mode' [(ngModel)]="meeting.report" [style]="{'height':'320px'}" name="report"></p-editor>
+      <div *ngIf='!edit_mode' [innerHTML]="meeting.report"></div>
+    </div>
+  </div>
+
+
+
+</form>

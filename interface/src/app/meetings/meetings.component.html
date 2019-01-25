@@ -1,0 +1,23 @@
+<h1>Meetings list</h1>
+
+<div class="p-grid">
+  <div class="p-col-12">
+
+    <p-table [value]="meetings">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Start</th>
+                <th>End</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-meeting>
+            <tr routerLink="/meetings/{{meeting.id}}">
+                <td>{{meeting.name}}</td>
+                <td>{{meeting.start_date}}</td>
+                <td>{{meeting.end_date}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>

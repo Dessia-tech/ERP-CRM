@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactsService } from '../services/contacts.service'
+import { OrganizationsService } from '../services/organizations.service'
 import { Contact, Organization } from '../models'
 import { SelectItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
@@ -15,12 +16,21 @@ export class ContactsComponent implements OnInit {
   organization: SelectItem[];
   organizations_choices: any[];
 
+  columns: any[];
+
   constructor(private contactsService: ContactsService,
+              private organizationService: OrganizationsService,
               private messageService: MessageService) { }
 
   ngOnInit() {
     this.getContacts();
     this.getOrganizations();
+
+    this.columns = [
+      { field: 'full_name', header: 'Full name' },
+      { field: 'email', header: 'Email' },
+      { field: 'organization', header: 'Organization' }
+    ];
 
   }
 
@@ -43,11 +53,13 @@ export class ContactsComponent implements OnInit {
   }
 
   getOrganizations(){
-    this.organizations_choices = [
-             {label:'Select Organization', value:null},
-             {label:'Dessia', value:{id:1, name: 'New York'}}
-         ];
-
+    this.organizationService.getOrganizations().subscribe(
+      organizations=>{
+        this.organizations_choices = [{label:'Select Organization', value:null}];
+        for (let organization of organizations){
+          this.organizations_choices.push({label: organization.name, value: organization.id})
+        }
+      })
   }
 
 }

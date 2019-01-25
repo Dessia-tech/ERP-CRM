@@ -1,0 +1,41 @@
+<h1>Organization list</h1>
+
+<div class="p-grid">
+  <div class="p-col-12 p-lg-9">
+
+    <p-table [value]="organizations">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-organization>
+            <tr routerLink="/organizations/{{organization.id}}">
+                <td>{{organization.name}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="p-col-12 p-lg-3">
+
+  <p-accordion>
+      <p-accordionTab header="Add an organization" [selected]="true">
+        <app-create-organization></app-create-organization>
+      </p-accordionTab>
+    </p-accordion>
+
+  </div>
+</div>
+
+
+
+
+<!-- <div class="form-group">
+  <label for="email">Email</label>
+  <input type="email" class="form-control"  id="email" name="email" placeholder="Email">
+  <label for="first_name">First name</label>
+  <input type="text" class="form-control" [(ngModel)]="contact_create.first_name" id="first_name" name="first_name" placeholder="First name">
+  <label for="last_name">Last name</label>
+  <input type="text" class="form-control" [(ngModel)]="contact_create.last_name" id="last_name" name="last_name" placeholder="Last name">
+
+</div> -->
